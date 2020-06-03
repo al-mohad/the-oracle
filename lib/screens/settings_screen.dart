@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(
                         'You are not a subscriber ',
                       )),
-                      button(
+                      Button(
                         height: 30,
                         width: 70,
                         child: Center(child: Text('See options')),
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Expanded(child: Text('My News Letter', style: headerStyle)),
-                    button(
+                    Button(
                         height: 30,
                         width: 70,
                         child: Center(child: Text('Show Catalogue'))),

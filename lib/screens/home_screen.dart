@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oracle/components/buttons.dart';
+import 'package:oracle/screens/search_screen.dart';
+import 'package:oracle/utils/constants.dart';
 import 'package:oracle/utils/text_styles.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,6 +11,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  static String country = 'ng';
+  String url =
+      'https://newsapi.org/v2/sources?language=en&country=$country&apiKey=$kNewsAPIKEY';
+
   Widget buildSearchWidget(BuildContext context) {
     return Container(
       color: Color(0xff757576),
@@ -27,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade200,
       body: Column(
         children: <Widget>[
           Expanded(
@@ -43,18 +50,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          button(
+                          Button(
                             height: 40,
                             width: 40,
                             child: Icon(
                               Icons.search,
                               size: 20,
                             ),
-                            onTap: () => showModalBottomSheet(
-                                context: context, builder: buildSearchWidget),
+                            onTap:
+//                                () => showModalBottomSheet(
+//                                context: context, builder: buildSearchWidget),
+                                () => Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (_) => SearchScreen(),
+                              ),
+                            ),
                           ),
                           SizedBox(width: 10),
-                          button(
+                          Button(
                             height: 40,
                             width: 40,
                             child: Icon(
@@ -63,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           SizedBox(width: 10),
-                          button(
+                          Button(
                             height: 40,
                             width: 40,
                             child: Icon(
@@ -93,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Expanded(
                           child:
                               Text('Nigerian Politics ', style: headerStyle)),
-                      button(
+                      Button(
                         height: 30,
                         width: 70,
                         child: Center(child: Text('Show all')),
@@ -135,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Expanded(child: Text('Middle East', style: headerStyle)),
-                    button(
+                    Button(
                         height: 30,
                         width: 70,
                         child: Center(child: Text('Show all'))),

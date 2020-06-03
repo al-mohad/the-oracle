@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class button extends StatelessWidget {
+class Button extends StatelessWidget {
   final child;
   final double height;
   final double width;
   final Function onTap;
-  button({this.child, this.height, this.width, this.onTap});
+  Button({this.child, this.height, this.width, this.onTap});
 
   @override
   Widget build(BuildContext context) {

@@ -1,0 +1,1 @@
+const kNewsAPIKEY = 'd258cbb5137d4264a73a4b7904692a50';
