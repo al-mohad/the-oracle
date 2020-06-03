@@ -9,6 +9,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Widget buildSearchWidget(BuildContext context) {
+    return Container(
+      color: Color(0xff757576),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(35.0),
+            topRight: Radius.circular(35.0),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,20 +44,44 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           button(
-                              height: 40,
-                              width: 40,
-                              child: Icon(
-                                Icons.search,
-                                size: 20,
-                              )),
+                            height: 40,
+                            width: 40,
+                            child: Icon(
+                              Icons.search,
+                              size: 20,
+                            ),
+                            onTap: () => showModalBottomSheet(
+                                context: context, builder: buildSearchWidget),
+                          ),
                           SizedBox(width: 10),
                           button(
-                              height: 40,
-                              width: 40,
-                              child: Icon(
-                                Icons.settings,
-                                size: 20,
-                              )),
+                            height: 40,
+                            width: 40,
+                            child: Icon(
+                              Icons.settings,
+                              size: 20,
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          button(
+                            height: 40,
+                            width: 40,
+                            child: Icon(
+                              Icons.info,
+                              size: 20,
+                            ),
+                            onTap: () => showAboutDialog(
+                                context: context,
+                                applicationVersion: '1.0.0',
+                                applicationName: 'The Oracle',
+                                applicationIcon: Container(
+                                  child: Image.asset('assets/images/logo.png'),
+                                  height: 40,
+                                  width: 40,
+                                ),
+                                applicationLegalese:
+                                    'The Oracle is News app that....'),
+                          ),
                         ],
                       ),
                     ],
