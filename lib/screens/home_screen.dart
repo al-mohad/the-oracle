@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oracle/components/articleTile.dart';
 import 'package:oracle/components/buttons.dart';
+import 'package:oracle/screens/politics.dart';
 import 'package:oracle/utils/text_styles.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Column(
         children: <Widget>[
+          // Header and Nigerian Title
           Expanded(
             flex: 2,
             child: Container(
@@ -52,12 +55,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Expanded(
-                          child:
-                              Text('Nigerian Politics ', style: headerStyle)),
+                          child: Text('Nigerian Politics', style: headerStyle)),
                       button(
                         height: 30,
                         width: 70,
                         child: Center(child: Text('Show all')),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => PoliticsScreen()));
+                        },
                       ),
                     ],
                   ),
@@ -65,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          // Horizontal ListView
           Expanded(
             flex: 2,
             child: Container(
@@ -88,6 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          // Continent Title
           Container(
             padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
             child: Column(
@@ -105,36 +115,20 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          // Vertical ListView
           Expanded(
             flex: 3,
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: 9,
-              itemBuilder: (_, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                    leading: Container(
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(16)),
-                    ),
-                    title: Text(
-                        'Egypt is on Edge as Security  Tightens Over Protest'),
-                    subtitle: Row(
-                      children: <Widget>[
-                        Text('Sept. 26, 2019'),
-                        SizedBox(width: 10),
-                        Text('.'),
-                        SizedBox(width: 10),
-                        Text('1:41 PM')
-                      ],
-                    ),
-                  ),
-                );
-              },
+            child: Container(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: 9,
+                itemBuilder: (_, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ArticleTile(),
+                  );
+                },
+              ),
             ),
           ),
         ],
@@ -142,3 +136,24 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+//ListTile(
+//leading: Container(
+//height: 80,
+//width: 60,
+//decoration: BoxDecoration(
+//color: Colors.blue,
+//borderRadius: BorderRadius.circular(16)),
+//),
+//title: Text(
+//'Egypt is on Edge as Security  Tightens Over Protest'),
+//subtitle: Row(
+//children: <Widget>[
+//Text('Sept. 26, 2019'),
+//SizedBox(width: 10),
+//Text('.'),
+//SizedBox(width: 10),
+//Text('1:41 PM')
+//],
+//),
+//),
