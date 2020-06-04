@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: <Widget>[
                       Expanded(
                           child:
-                              Text('Nigerian Politics ', style: headerStyle)),
+                              Text('Nigerian Politics ', style: headlineStyle)),
                       Button(
                         height: 30,
                         width: 70,

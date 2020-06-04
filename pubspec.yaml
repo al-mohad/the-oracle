@@ -65,6 +65,18 @@ flutter:
      - family: Old English
        fonts:
          - asset: assets/fonts/OldEnglishRegular.ttf
+     - family: Montserrat
+       fonts:
+         - asset: assets/fonts/Montserrat-Regular.ttf
+     - family: Raleway
+       fonts:
+        - asset: assets/fonts/Raleway-Regular.ttf
+     - family: Ninito-Black
+       fonts:
+        - asset: assets/fonts/Nunito-Black-Regular.ttf
+     - family: Nunito
+       fonts:
+         - asset: assets/fonts/Nunito-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
