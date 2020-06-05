@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'package:oracle/utils/constants.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -8,6 +12,22 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  var newsArticles;
+  searchNews(String searchTerm) async {
+    String url = '$kHeadlinesUrl?country=us&apiKey=$kNewsAPIKEY';
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var _newsArticles = jsonDecode(response.body)['articles'];
+
+      setState(() {
+        newsArticles = _newsArticles;
+        print(newsArticles);
+      });
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

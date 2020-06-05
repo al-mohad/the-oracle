@@ -24,6 +24,7 @@ class Headlines extends StatelessWidget {
           newsTitle: newsArticles[index]['title'] ?? '',
           newsContents: newsArticles[index]['content'],
           newsDescription: newsArticles[index]['description'],
+          news: newsArticles[index],
         );
       },
     );

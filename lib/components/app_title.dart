@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:oracle/components/buttons.dart';
+import 'package:oracle/components/setttings.dart';
 import 'package:oracle/screens/search_screen.dart';
 import 'package:oracle/utils/text_styles.dart';
 
@@ -38,6 +39,8 @@ class AppTitle extends StatelessWidget {
             ),
             SizedBox(width: 10),
             Button(
+              onTap: () => showModalBottomSheet(
+                  context: context, builder: buildSettingsBottomSheetModal),
               height: 40,
               width: 40,
               child: Icon(
