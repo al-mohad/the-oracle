@@ -1,10 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:oracle/models/settings_model.dart';
 import 'package:oracle/utils/text_styles.dart';
 import 'package:oracle/utils/the_oracle_data.dart';
+import 'package:oracle/utils/theme.dart';
+import 'package:provider/provider.dart';
 
 Widget buildSettingsBottomSheetModal(BuildContext context) {
+  var _lightTheme = true;
+  final themeNotifier = Provider.of<ThemeNotifier>(context);
+  _lightTheme = (themeNotifier.getTheme() == lightTheme);
   String selectedCategory = 'Nigeria';
   void getDropDownItems() {
     for (int i = 0; i < countriesMap.length; i++) {
@@ -14,6 +20,12 @@ Widget buildSettingsBottomSheetModal(BuildContext context) {
         value: country,
       );
     }
+  }
+
+  void onThemeChanged(bool value, ThemeNotifier themNotifier) async {
+    (value)
+        ? themNotifier.setTheme(darkTheme)
+        : themNotifier.setTheme(lightTheme);
   }
 
   return Container(
@@ -37,8 +49,10 @@ Widget buildSettingsBottomSheetModal(BuildContext context) {
                 Icon(FontAwesomeIcons.solidMoon),
                 CupertinoSwitch(
                   activeColor: Colors.black,
-                  value: true,
-                  onChanged: (t) {},
+                  value: _lightTheme,
+                  onChanged: (value) {
+                    _lightTheme = value;
+                  },
                 )
               ],
             ),
