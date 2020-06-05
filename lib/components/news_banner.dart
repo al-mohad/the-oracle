@@ -16,7 +16,7 @@ class NewsBanner extends StatelessWidget {
         Expanded(child: Text(title, style: header2Style)),
         Button(
           height: 30,
-          width: 70,
+          width: 80,
           onTap: showAll,
           child: Center(
               child: Text(
