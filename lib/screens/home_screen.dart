@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:oracle/articles.dart';
 import 'package:oracle/components/all_news.dart';
 import 'package:oracle/components/app_title.dart';
 import 'package:oracle/components/headlines.dart';
@@ -17,19 +18,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   static String country = 'us';
   static String newsCategory = 'health';
+  ArticlesData allNews;
+  ArticlesData headlineNews;
 
-  var newsArticles;
   getHeadlineNews() async {
     String url =
         '$kHeadlinesUrl?country=$country&category=$newsCategory&apiKey=$kNewsAPIKEY';
     print(url);
     var response = await http.get(url);
     if (response.statusCode == 200) {
-      var _newsArticles = jsonDecode(response.body)['articles'];
-
+      var _decodedData = jsonDecode(response.body);
       setState(() {
-        newsArticles = _newsArticles;
-        print(newsArticles);
+        headlineNews = ArticlesData.fromJson(_decodedData);
       });
     } else {
       print('Request failed with status: ${response.statusCode}.');
@@ -37,18 +37,17 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   getAllNews() async {
-    String url = '$kHeadlinesUrl?country=$country&apiKey=$kNewsAPIKEY';
-    print(url);
-    var response = await http.get(url);
-    if (response.statusCode == 200) {
-      var _newsArticles = jsonDecode(response.body)['articles'];
+    String _url = '$kHeadlinesUrl?country=$country&apiKey=$kNewsAPIKEY';
+    print(_url);
+    var _response = await http.get(_url);
 
+    if (_response.statusCode == 200) {
+      var _decodedResponse = jsonDecode(_response.body);
       setState(() {
-        newsArticles = _newsArticles;
-        print(newsArticles);
+        allNews = ArticlesData.fromJson(_decodedResponse);
       });
     } else {
-      print('Request failed with status: ${response.statusCode}.');
+      print('Request failed with status: ${_response.statusCode}.');
     }
   }
 
@@ -71,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     getHeadlineNews();
+    getAllNews();
   }
 
   @override
@@ -97,18 +97,25 @@ class _HomeScreenState extends State<HomeScreen> {
             flex: 4,
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 10),
-              child: newsArticles == null
+              child: headlineNews == null
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : Headlines(newsArticles: newsArticles),
+                  : Headlines(newsArticles: headlineNews),
             ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: NewsBanner(title: 'Middle East', showAll: () {}),
           ),
-          AllNews(),
+          Expanded(
+            flex: 3,
+            child: allNews == null
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : AllNews(newsArticles: allNews),
+          ),
         ],
       ),
     );

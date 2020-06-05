@@ -13,6 +13,7 @@ class HeadlineTile extends StatelessWidget {
   final String newsUrl;
   final String newsSourceName;
   final DateTime newsPublishedAt;
+  final dynamic news;
 
   const HeadlineTile(
       {Key key,
@@ -23,7 +24,8 @@ class HeadlineTile extends StatelessWidget {
       this.newsUrlToImage,
       this.newsUrl,
       this.newsPublishedAt,
-      this.newsSourceName})
+      this.newsSourceName,
+      this.news})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,9 @@ class HeadlineTile extends StatelessWidget {
       onTap: () => Navigator.push(
           context,
           CupertinoPageRoute(
-            builder: (_) => DetailsScreen(),
+            builder: (_) => DetailsScreen(
+              news: news,
+            ),
           )),
       child: Container(
         width: 280,

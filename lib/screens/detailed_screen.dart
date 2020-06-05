@@ -2,26 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatelessWidget {
-  final String newsAuthor;
-  final String newsTitle;
-  final String newsDescription;
-  final String newsContents;
-  final String newsUrlToImage;
-  final String newsUrl;
-  final String newsSourceName;
-  final DateTime newsPublishedAt;
+  final dynamic news;
 
-  const DetailsScreen(
-      {Key key,
-      this.newsAuthor,
-      this.newsTitle,
-      this.newsDescription,
-      this.newsContents,
-      this.newsUrlToImage,
-      this.newsUrl,
-      this.newsSourceName,
-      this.newsPublishedAt})
-      : super(key: key);
+  const DetailsScreen({Key key, this.news}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
