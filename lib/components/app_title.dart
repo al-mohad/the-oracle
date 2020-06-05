@@ -7,8 +7,10 @@ import 'package:oracle/screens/search_screen.dart';
 import 'package:oracle/utils/text_styles.dart';
 
 class AppTitle extends StatelessWidget {
+  final String currentCountry;
   const AppTitle({
     Key key,
+    this.currentCountry,
   }) : super(key: key);
 
   @override
@@ -33,7 +35,7 @@ class AppTitle extends StatelessWidget {
                   () => Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (_) => SearchScreen(),
+                  builder: (_) => SearchScreen(currentCountry: currentCountry),
                 ),
               ),
             ),

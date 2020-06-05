@@ -13,11 +13,10 @@ class HeadlineTile extends StatelessWidget {
   final String newsUrl;
   final String newsSourceName;
   final DateTime newsPublishedAt;
-  final dynamic news;
+  dynamic news;
 
   HeadlineTile(
       {Key key,
-      this.news,
       this.newsAuthor,
       this.newsTitle,
       this.newsContents,
@@ -25,7 +24,8 @@ class HeadlineTile extends StatelessWidget {
       this.newsUrlToImage,
       this.newsUrl,
       this.newsPublishedAt,
-      this.newsSourceName})
+      this.newsSourceName,
+      this.news})
       : super(key: key);
   @override
   Widget build(BuildContext context) {

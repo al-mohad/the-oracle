@@ -4,28 +4,37 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:oracle/articles.dart';
+import 'package:oracle/components/article_tile.dart';
 import 'package:oracle/utils/constants.dart';
 
 class SearchScreen extends StatefulWidget {
+  final String currentCountry;
+
+  const SearchScreen({Key key, this.currentCountry}) : super(key: key);
+
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  ArticlesData searchedArticles;
+  TextEditingController searchController = TextEditingController();
   var newsArticles;
   searchNews(String searchTerm) async {
-    String url = '$kHeadlinesUrl?country=us&apiKey=$kNewsAPIKEY';
+    searchedArticles = null;
+    String url =
+        '$kHeadlinesUrl?q=$searchTerm&country=${widget.currentCountry}&apiKey=$kNewsAPIKEY';
     var response = await http.get(url);
     if (response.statusCode == 200) {
-      var _newsArticles = jsonDecode(response.body)['articles'];
-
+      var _decodedData = jsonDecode(response.body);
       setState(() {
-        newsArticles = _newsArticles;
-        print(newsArticles);
+        searchedArticles = ArticlesData.fromJson(_decodedData);
       });
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }
+    searchController.clear();
   }
 
   @override
@@ -36,15 +45,14 @@ class _SearchScreenState extends State<SearchScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 5.0),
-            margin:
-                EdgeInsets.only(bottom: 0, top: 50.0, left: 10.0, right: 10.0),
+            margin: EdgeInsets.only(top: 50.0, left: 15.0, right: 15.0),
+            padding: EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20.0),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Icon(FontAwesomeIcons.newspaper),
                 SizedBox(width: 5),
@@ -54,24 +62,35 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
                 SizedBox(width: 5),
-                Icon(Icons.search)
+                IconButton(
+                  icon: Icon(FontAwesomeIcons.search),
+                  onPressed: () => searchNews(searchController.text),
+                ),
               ],
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: 13,
-              itemBuilder: (_, index) {
-                return Container(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  child: Card(
-                    child: ListTile(
-                      title: Text('Title'),
+            child: searchedArticles == null
+                ? Container(
+                    child: Center(
+                      child: CircularProgressIndicator(),
                     ),
+                  )
+                : ListView.builder(
+                    itemCount: searchedArticles.articles.length,
+                    itemBuilder: (_, index) {
+                      return Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        child: ArticleTile(
+                            title: searchedArticles.articles[index].title,
+                            urlToImage:
+                                searchedArticles.articles[index].urlToImage,
+                            publishedAt:
+                                searchedArticles.articles[index].publishedAt),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
         ],
       ),

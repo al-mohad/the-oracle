@@ -5,19 +5,10 @@ import 'package:oracle/components/share_button.dart';
 import 'package:oracle/utils/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DetailsScreen extends StatefulWidget {
+class DetailsScreen extends StatelessWidget {
   final dynamic news;
 
-  DetailsScreen({
-    Key key,
-    this.news,
-  }) : super(key: key);
-
-  @override
-  _DetailsScreenState createState() => _DetailsScreenState();
-}
-
-class _DetailsScreenState extends State<DetailsScreen> {
+  const DetailsScreen({Key key, this.news}) : super(key: key);
   Future<void> _launchInBrowser(String url) async {
     if (await canLaunch(url)) {
       await launch(
@@ -52,8 +43,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 height: MediaQuery.of(context).size.height * 0.53,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(widget.news['urlToImage']),
-                      fit: BoxFit.cover),
+                      image: NetworkImage(''), fit: BoxFit.cover),
                 ),
                 child: Stack(
                   children: <Widget>[
@@ -99,14 +89,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            widget.news['description'],
+                            'Description',
                             style: mySubtitleStyle.copyWith(
                                 fontWeight: FontWeight.bold),
                             textAlign: TextAlign.justify,
                           ),
                           SizedBox(height: 10),
                           Text(
-                            widget.news['content'],
+                            'Content',
                             style: mySubtitleStyle,
                           ),
                           Row(
@@ -129,8 +119,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               ),
                               Spacer(),
                               GestureDetector(
-                                onTap: () =>
-                                    _launchInBrowser(widget.news['url']),
+                                onTap: () => _launchInBrowser(news['url']),
                                 child: Container(
                                   height: 40,
                                   width: 90,
