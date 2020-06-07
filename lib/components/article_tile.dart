@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oracle/articles.dart';
 import 'package:oracle/screens/detailed_screen.dart';
 import 'package:oracle/utils/functions.dart';
 import 'package:oracle/utils/text_styles.dart';
@@ -8,12 +9,16 @@ class ArticleTile extends StatelessWidget {
   final String title;
   final String urlToImage;
   final String publishedAt;
+  final ArticlesData newsArticle;
+  final int newsIndex;
 
   ArticleTile({
     Key key,
     @required this.title,
     @required this.urlToImage,
     @required this.publishedAt,
+    this.newsArticle,
+    this.newsIndex,
   }) : super(key: key);
 
   @override
@@ -24,7 +29,10 @@ class ArticleTile extends StatelessWidget {
         onTap: () => Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (_) => DetailsScreen(),
+              builder: (_) => DetailsScreen(
+                newsArticle: newsArticle,
+                newsIndex: newsIndex,
+              ),
             )),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +60,7 @@ class ArticleTile extends StatelessWidget {
                   children: [
                     Container(
                       child: Text(
-                        '${title.length > 20 ? title.substring(0, 50) : title}'
+                        '${title.length > 20 ? title.substring(0, 40) : title}'
                         '...',
                         style: articleTitle,
                       ),

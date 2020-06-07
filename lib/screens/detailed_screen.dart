@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:oracle/articles.dart';
 import 'package:oracle/components/share_button.dart';
+import 'package:oracle/utils/functions.dart';
 import 'package:oracle/utils/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailsScreen extends StatelessWidget {
-  final dynamic news;
+  final int newsIndex;
+  final ArticlesData newsArticle;
 
-  const DetailsScreen({Key key, this.news}) : super(key: key);
+  const DetailsScreen({Key key, this.newsIndex, this.newsArticle})
+      : super(key: key);
   Future<void> _launchInBrowser(String url) async {
     if (await canLaunch(url)) {
       await launch(
@@ -43,7 +47,9 @@ class DetailsScreen extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.53,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(''), fit: BoxFit.cover),
+                      image: NetworkImage(
+                          newsArticle.articles[newsIndex].urlToImage),
+                      fit: BoxFit.cover),
                 ),
                 child: Stack(
                   children: <Widget>[
@@ -68,6 +74,21 @@ class DetailsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        margin:
+                            EdgeInsets.symmetric(vertical: 50, horizontal: 10),
+                        child: Text(
+                          newsArticle.articles[newsIndex].title,
+                          style: mySubtitleStyle.copyWith(
+                              fontSize: 22,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.justify,
+                        ),
+                      ),
                     )
                   ],
                 ),
@@ -89,15 +110,33 @@ class DetailsScreen extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            'Description',
+                            newsArticle.articles[newsIndex].description,
                             style: mySubtitleStyle.copyWith(
                                 fontWeight: FontWeight.bold),
                             textAlign: TextAlign.justify,
                           ),
                           SizedBox(height: 10),
                           Text(
-                            'Content',
+                            newsArticle.articles[newsIndex].content,
                             style: mySubtitleStyle,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.all(10),
+                                child: Text(
+                                  newsArticle.articles[newsIndex].source.name,
+                                  style: topHeadlinesStyle.copyWith(
+                                      color: Colors.black),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.all(10),
+                                child: Text(formatPublishedTime(newsArticle
+                                    .articles[newsIndex].publishedAt)),
+                              )
+                            ],
                           ),
                           Row(
                             children: <Widget>[
@@ -119,7 +158,8 @@ class DetailsScreen extends StatelessWidget {
                               ),
                               Spacer(),
                               GestureDetector(
-                                onTap: () => _launchInBrowser(news['url']),
+                                onTap: () => _launchInBrowser(
+                                    newsArticle.articles[newsIndex].url),
                                 child: Container(
                                   height: 40,
                                   width: 90,

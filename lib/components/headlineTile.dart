@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:oracle/articles.dart';
 import 'package:oracle/screens/detailed_screen.dart';
 import 'package:oracle/utils/text_styles.dart';
 
@@ -13,7 +14,8 @@ class HeadlineTile extends StatelessWidget {
   final String newsUrl;
   final String newsSourceName;
   final DateTime newsPublishedAt;
-  dynamic news;
+  final ArticlesData newsArticle;
+  final int newsIndex;
 
   HeadlineTile(
       {Key key,
@@ -25,7 +27,8 @@ class HeadlineTile extends StatelessWidget {
       this.newsUrl,
       this.newsPublishedAt,
       this.newsSourceName,
-      this.news})
+      this.newsIndex,
+      this.newsArticle})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,8 @@ class HeadlineTile extends StatelessWidget {
           context,
           CupertinoPageRoute(
             builder: (_) => DetailsScreen(
-              news: news,
+              newsIndex: newsIndex,
+              newsArticle: newsArticle,
             ),
           )),
       child: Container(

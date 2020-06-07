@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:oracle/articles.dart';
 import 'package:oracle/components/article_tile.dart';
 
-class AllNews extends StatelessWidget {
+class HeadlineList extends StatelessWidget {
   final ArticlesData newsArticles;
-  const AllNews({
+  const HeadlineList({
     Key key,
     @required this.newsArticles,
   }) : super(key: key);

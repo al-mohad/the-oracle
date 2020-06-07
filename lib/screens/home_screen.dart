@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:oracle/articles.dart';
 import 'package:oracle/components/all_news.dart';
 import 'package:oracle/components/app_title.dart';
+import 'package:oracle/components/headline_list.dart';
 import 'package:oracle/components/headlines.dart';
 import 'package:oracle/components/news_banner.dart';
 import 'package:oracle/utils/constants.dart';
@@ -16,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  static String country = 'fr';
+  static String country = 'ng';
   static String newsCategory = 'health';
   ArticlesData allNews;
   ArticlesData headlineNews;
@@ -88,7 +89,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   AppTitle(currentCountry: country),
                   Spacer(),
-                  NewsBanner(title: 'Nigerian Politics', showAll: () {}),
+                  NewsBanner(
+                    title: 'Politics Headlines',
+                    showAll: () => Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (_) =>
+                            HeadlineList(newsArticles: headlineNews),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -106,7 +116,15 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: NewsBanner(title: 'Middle East', showAll: () {}),
+            child: NewsBanner(
+              title: 'Nigeria',
+              showAll: () => Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (_) => AllNews(newsArticles: allNews),
+                ),
+              ),
+            ),
           ),
           Expanded(
             flex: 3,
